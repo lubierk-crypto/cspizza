@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventario | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="container">
+        <header class="topbar">
+            <h2>Inventario</h2>
+            <div class="user-actions">
+                <a class="logout-link" th:href="@{/dashboard}">Inicio</a>
+                <a class="logout-link" th:href="@{/logout}">Cerrar sesión</a>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h3>Control de inventario</h3>
+            <p>Monitorea cantidades, ubicaciones y niveles de existencias.</p>
+            <a class="btn btn-primary" th:href="@{/inventarios/nuevo}" style="width:auto; display:inline-flex;">Nuevo registro</a>
+        </section>
+
+        <section class="card" style="margin-top:24px;">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Producto</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Actual</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Mínimo</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Ubicación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inventario : ${inventarios}">
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${inventario.idProducto}">Producto</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${inventario.cantidadActual}">Actual</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${inventario.cantidadMinima}">Mínimo</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${inventario.ubicacion}">Ubicación</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

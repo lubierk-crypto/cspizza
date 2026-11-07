@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pedidos | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="container">
+        <header class="topbar">
+            <h2>Pedidos</h2>
+            <div class="user-actions">
+                <a class="logout-link" th:href="@{/dashboard}">Inicio</a>
+                <a class="logout-link" th:href="@{/logout}">Cerrar sesión</a>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h3>Seguimiento de pedidos</h3>
+            <p>Visualiza el estado y detalle de las órdenes del restaurante.</p>
+            <a class="btn btn-primary" th:href="@{/pedidos/nuevo}" style="width:auto; display:inline-flex;">Nuevo pedido</a>
+        </section>
+
+        <section class="card" style="margin-top:24px;">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Pedido</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Cliente</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Estado</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pedido : ${pedidos}">
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${pedido.idPedido}">Pedido</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${pedido.idCliente}">Cliente</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${pedido.estado}">Estado</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${pedido.totalPedido}">Total</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

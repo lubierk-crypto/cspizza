@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle de pedidos | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="container">
+        <header class="topbar">
+            <h2>Detalle de pedidos</h2>
+            <div class="user-actions">
+                <a class="logout-link" th:href="@{/dashboard}">Inicio</a>
+                <a class="logout-link" th:href="@{/logout}">Cerrar sesión</a>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h3>Detalle de órdenes</h3>
+            <p>Revisa productos, cantidades y subtotales por pedido.</p>
+            <a class="btn btn-primary" th:href="@{/detalle-pedidos/nuevo}" style="width:auto; display:inline-flex;">Nuevo detalle</a>
+        </section>
+
+        <section class="card" style="margin-top:24px;">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Pedido</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Producto</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Cantidad</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="detalle : ${detallePedidos}">
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${detalle.idPedido}">Pedido</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${detalle.idProducto}">Producto</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${detalle.cantidad}">Cantidad</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${detalle.subtotal}">Subtotal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>
