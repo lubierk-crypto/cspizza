@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Gerencia | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="container">
+        <header class="topbar">
+            <h2>Panel de gerencia</h2>
+            <div class="user-actions">
+                <span class="user-pill" th:text="'Usuario: ' + ${username}">Usuario</span>
+                <a class="logout-link" th:href="@{/logout}">Cerrar sesión</a>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h3>Bienvenido, gerente</h3>
+            <p>Revisa ventas, productos y desempeño del restaurante con permisos de supervisión.</p>
+        </section>
+
+        <section class="grid">
+            <article class="card">
+                <div class="icon">P</div>
+                <h3>Productos</h3>
+                <p>Actualiza la oferta y precios principales.</p>
+                <a th:href="@{/productos}">Ver productos</a>
+            </article>
+
+            <article class="card">
+                <div class="icon">O</div>
+                <h3>Pedidos</h3>
+                <p>Supervisa órdenes en curso y entregas.</p>
+                <a th:href="@{/pedidos}">Ver pedidos</a>
+            </article>
+
+            <article class="card">
+                <div class="icon">F</div>
+                <h3>Facturas</h3>
+                <p>Revisión de comprobantes y pagos.</p>
+                <a th:href="@{/facturas}">Ver facturas</a>
+            </article>
+
+            <article class="card">
+                <div class="icon">I</div>
+                <h3>Inventario</h3>
+                <p>Monitoreo de stock crítico y abastecimiento.</p>
+                <a th:href="@{/inventarios}">Ver inventario</a>
+            </article>
+        </section>
+    </div>
+</body>
+</html>

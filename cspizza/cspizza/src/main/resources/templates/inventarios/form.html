@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventario | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="container">
+        <header class="topbar">
+            <h2>Inventario</h2>
+            <div class="user-actions">
+                <a class="logout-link" th:href="@{/inventarios}">Cancelar</a>
+            </div>
+        </header>
+
+        <section class="card" style="margin-top:24px; max-width:720px;">
+            <form th:action="@{/inventarios/guardar}" th:object="${inventario}" method="post">
+                <input type="hidden" th:field="*{idInventario}" />
+
+                <div class="form-group">
+                    <label for="idProducto">Producto</label>
+                    <input id="idProducto" class="form-control" type="number" th:field="*{idProducto}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="cantidadActual">Cantidad actual</label>
+                    <input id="cantidadActual" class="form-control" type="number" th:field="*{cantidadActual}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="cantidadMinima">Cantidad mínima</label>
+                    <input id="cantidadMinima" class="form-control" type="number" th:field="*{cantidadMinima}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="cantidadMaxima">Cantidad máxima</label>
+                    <input id="cantidadMaxima" class="form-control" type="number" th:field="*{cantidadMaxima}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="ubicacion">Ubicación</label>
+                    <input id="ubicacion" class="form-control" type="text" th:field="*{ubicacion}" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
