@@ -1,0 +1,487 @@
+﻿
+==============================================================================
+ 0. AUTENTICACION Y CSRF
+ 2026-11-15 22:02:41
+==============================================================================
+
+[GET] /login  (formulario de inicio de sesion)
+    HTTP 200
+    El formulario incluye el campo oculto _csrf: YbWEZFaAmVhZJa1m...
+
+[POST] /login  (username=admin, password=admin123)
+    HTTP 302  ->  se emite la cookie de sesion y el usuario queda autenticado
+
+
+==============================================================================
+ 1. CRUD - CATEGORIAS
+ 2026-11-15 22:02:42
+==============================================================================
+
+[GET] /api/categorias
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"descripcion":"Pizzas tradicionales y especiales","estado":"ACTIVO","idCategoria":1,"nombre":"Pizzas"},{"descripcion":"Bebidas frias y calientes","estado":"ACTIVO","idCategoria":2,"nombre":"Bebidas"},{"descripcion":"Complementos y acompanamientos","estado":"ACTIVO","idCategoria":3,"nombre":"Complementos"}]
+
+    Elementos devueltos: 3
+
+[POST] /api/categorias
+    Body: {"nombre":"Evidencia Demo","descripcion":"Categoria de prueba","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"descripcion":"Categoria de prueba","estado":"ACTIVO","idCategoria":35,"nombre":"Evidencia Demo"}
+
+    Id creado: 35
+
+[GET] /api/categorias/35
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"descripcion":"Categoria de prueba","estado":"ACTIVO","idCategoria":35,"nombre":"Evidencia Demo"}
+
+
+[PUT] /api/categorias/35
+    Body: {"nombre":"Evidencia Demo EDITADA","descripcion":"Actualizada","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"descripcion":"Actualizada","estado":"ACTIVO","idCategoria":35,"nombre":"Evidencia Demo EDITADA"}
+
+
+[DELETE] /api/categorias/35
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+
+[GET] /api/categorias/35
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 404
+
+    (404 esperado: el registro fue eliminado)
+
+
+==============================================================================
+ 1. CRUD - CLIENTES
+ 2026-11-15 22:02:42
+==============================================================================
+
+[GET] /api/clientes
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"apellido":"Garcia","correo":"ana@correo.com","direccion":"Calle 10 #20-30","estado":"ACTIVO","fechaRegistro":"2026-11-14T03:46:34","idCliente":1,"nombre":"Ana","telefono":"3001112233"},{"apellido":"Perez","correo":"luis@correo.com","direccion":"Carrera 11 #25-15","estado":"ACTIVO","fechaRegistro":"2026-11-14T03:46:34","idCliente":2,"nombre":"Luis","telefono":"3002223344"}]
+
+    Elementos devueltos: 2
+
+[POST] /api/clientes
+    Body: {"nombre":"Cliente","apellido":"Evidencia","telefono":"3000000000","correo":"evidencia@example.test","direccion":"Calle 1 #2-3","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"apellido":"Evidencia","correo":"evidencia@example.test","direccion":"Calle 1 #2-3","estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43.0221752","idCliente":13,"nombre":"Cliente","telefono":"3000000000"}
+
+    Id creado: 13
+
+[GET] /api/clientes/13
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"apellido":"Evidencia","correo":"evidencia@example.test","direccion":"Calle 1 #2-3","estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43","idCliente":13,"nombre":"Cliente","telefono":"3000000000"}
+
+
+[PUT] /api/clientes/13
+    Body: {"nombre":"Cliente EDITADO","apellido":"Evidencia","correo":"evidencia@example.test","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"apellido":"Evidencia","correo":"evidencia@example.test","direccion":null,"estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43","idCliente":13,"nombre":"Cliente EDITADO","telefono":null}
+
+
+[DELETE] /api/clientes/13
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+
+[GET] /api/clientes/13
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 404
+
+    (404 esperado: el registro fue eliminado)
+
+
+==============================================================================
+ 1. CRUD - USUARIOS
+ 2026-11-15 22:02:43
+==============================================================================
+
+[GET] /api/usuarios
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"apellido":"Caja","correo":"empleado@cspizza.com","estado":"ACTIVO","fechaRegistro":"2026-11-14T03:46:34","idUsuario":3,"nombre":"Empleado","nombreUsuario":"empleado","rol":"EMPLEADO"},{"apellido":"Sistema","correo":"admin@cspizza.com","estado":"ACTIVO","fechaRegistro":"2026-11-15T16:54:58","idUsuario":14,"nombre":"Administrador","nombreUsuario":"admin","rol":"ADMIN"},{"apellido":"General","correo":"gerente@cspizza.com","estado":"ACTIVO","fechaRegistro":"2026-11-15T16:54:58","idUsuario":15,"nombre":"Gerente","nombreUsuario":"gerente","rol":"GERENTE"}]
+
+    Elementos devueltos: 3
+
+[POST] /api/usuarios
+    Body: {"nombreUsuario":"evidencia_user","nombre":"Usuario","apellido":"Evidencia","rol":"EMPLEADO","correo":"evidencia_usuario@example.test","password":"clave-evidencia"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"apellido":"Evidencia","correo":"evidencia_usuario@example.test","estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43.3101128","idUsuario":16,"nombre":"Usuario","nombreUsuario":"evidencia_user","rol":"EMPLEADO"}
+
+    Id creado: 16
+
+[GET] /api/usuarios/16
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"apellido":"Evidencia","correo":"evidencia_usuario@example.test","estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43","idUsuario":16,"nombre":"Usuario","nombreUsuario":"evidencia_user","rol":"EMPLEADO"}
+
+
+[PUT] /api/usuarios/16
+    Body: {"nombreUsuario":"evidencia_user","nombre":"Usuario EDITADO","apellido":"Evidencia","rol":"EMPLEADO","correo":"evidencia_usuario@example.test","password":"clave-evidencia"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"apellido":"Evidencia","correo":"evidencia_usuario@example.test","estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43","idUsuario":16,"nombre":"Usuario EDITADO","nombreUsuario":"evidencia_user","rol":"EMPLEADO"}
+
+
+[DELETE] /api/usuarios/16
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+
+[GET] /api/usuarios/16
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 404
+
+    (404 esperado: el registro fue eliminado)
+
+
+==============================================================================
+ 1. CRUD - PRODUCTOS
+ 2026-11-15 22:02:43
+==============================================================================
+
+[GET] /api/productos
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"descripcion":"Pizza con salsa de tomate, mozzarella y albahaca","estado":"ACTIVO","fechaRegistro":"2026-11-14T03:46:34","idCategoria":1,"idProducto":1,"imagenUrl":"images/pizza-margarita.jpg","nombre":"Pizza Margarita","precioUnitario":26000.00,"stock":20},{"descripcion":"Pizza con pepperoni y queso mozzarella","estado":"ACTIVO","fechaRegistro":"2026-11-14T03:46:34","idCategoria":1,"idProducto":2,"imagenUrl":"images/pizza-pepperoni.jpg","nombre":"Pizza Pepperoni","precioUnitario":30000.00,"stock":18},{"descripcion":"Gaseosa fr?a de diferentes sabores","estado":"ACTIVO","fechaRegistro":"2026-11-14T03:46:34","idCategoria":2,"idProducto":3,"imagenUrl":"images/gaseosa.jpg","nombre":"Gaseosa 600ml","precioUnitario":4500.00,"stock":40}]
+
+    Elementos devueltos: 3
+
+[POST] /api/productos
+    Body: {"idCategoria":1,"nombre":"Pizza Evidencia","descripcion":"Producto de prueba","precioUnitario":25000,"stock":10,"estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"descripcion":"Producto de prueba","estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43.6443171","idCategoria":1,"idProducto":25,"imagenUrl":null,"nombre":"Pizza Evidencia","precioUnitario":25000,"stock":10}
+
+    Id creado: 25
+
+[GET] /api/productos/25
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"descripcion":"Producto de prueba","estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43","idCategoria":1,"idProducto":25,"imagenUrl":null,"nombre":"Pizza Evidencia","precioUnitario":25000.00,"stock":10}
+
+
+[PUT] /api/productos/25
+    Body: {"idCategoria":35,"nombre":"Pizza Evidencia EDITADA","precioUnitario":27000,"stock":12,"estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 404
+    {"timestamp":"2026-11-16T03:02:43.786312Z","status":404,"error":"Not Found","message":"No existe la categoría solicitada.","path":"/api/productos/25","fieldErrors":{}}
+
+
+[DELETE] /api/productos/25
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+
+[GET] /api/productos/25
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 404
+
+    (404 esperado: el registro fue eliminado)
+
+
+==============================================================================
+ 2. DATOS DE REFERENCIA (cliente, usuario y producto para el pedido)
+ 2026-11-15 22:02:43
+==============================================================================
+
+[POST] /api/clientes
+    Body: {"nombre":"Cliente","apellido":"Referencia","correo":"referencia@example.test","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"apellido":"Referencia","correo":"referencia@example.test","direccion":null,"estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43.8949666","idCliente":14,"nombre":"Cliente","telefono":null}
+
+    Cliente de referencia creado con id 14
+
+[POST] /api/usuarios
+    Body: {"nombreUsuario":"referencia_user","nombre":"Usuario","apellido":"Referencia","rol":"EMPLEADO","correo":"referencia_usuario@example.test","password":"clave-referencia"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"apellido":"Referencia","correo":"referencia_usuario@example.test","estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43.951873","idUsuario":17,"nombre":"Usuario","nombreUsuario":"referencia_user","rol":"EMPLEADO"}
+
+    Usuario de referencia creado con id 17
+
+[POST] /api/productos
+    Body: {"idCategoria":1,"nombre":"Pizza Referencia","precioUnitario":25000,"stock":10,"estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"descripcion":null,"estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:44.0054361","idCategoria":1,"idProducto":26,"imagenUrl":null,"nombre":"Pizza Referencia","precioUnitario":25000,"stock":10}
+
+    Producto de referencia creado con id 26 (stock 10)
+
+
+==============================================================================
+ 3. CRUD - PEDIDOS (depende de cliente y usuario)
+ 2026-11-15 22:02:44
+==============================================================================
+
+[GET] /api/pedidos
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"clienteNombre":"Ana Garcia","detalleLineas":[],"direccionEntrega":"Calle 10 #20-30","estado":"PENDIENTE","fechaPedido":"2026-11-14T03:46:34","idCliente":1,"idPedido":1,"idUsuario":3,"observacion":"Sin cebolla","resumenProductos":null,"tipoEntrega":"DOMICILIO","totalPedido":30500.00,"usuarioNombre":"empleado"},{"clienteNombre":"Luis Perez","detalleLineas":[],"direccionEntrega":"Sucursal principal","estado":"ENTREGADO","fechaPedido":"2026-11-14T03:46:34","idCliente":2,"idPedido":2,"idUsuario":3,"observacion":"Sin comentarios","resumenProductos":null,"tipoEntrega":"LOCAL","totalPedido":26000.00,"usuarioNombre":"empleado"}]
+
+    Elementos devueltos: 2
+
+[POST] /api/pedidos
+    Body: {"idCliente":14,"idUsuario":17,"estado":"PENDIENTE","observacion":"Pedido de evidencia","tipoEntrega":"DOMICILIO","direccionEntrega":"Calle 1 #2-3"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"clienteNombre":"Cliente Referencia","detalleLineas":[],"direccionEntrega":"Calle 1 #2-3","estado":"PENDIENTE","fechaPedido":"2026-11-15T22:02:44.173983","idCliente":14,"idPedido":4,"idUsuario":17,"observacion":"Pedido de evidencia","resumenProductos":null,"tipoEntrega":"DOMICILIO","totalPedido":0,"usuarioNombre":"referencia_user"}
+
+    Id creado: 4
+
+[GET] /api/pedidos/4
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"clienteNombre":"Cliente Referencia","detalleLineas":[],"direccionEntrega":"Calle 1 #2-3","estado":"PENDIENTE","fechaPedido":"2026-11-15T22:02:44","idCliente":14,"idPedido":4,"idUsuario":17,"observacion":"Pedido de evidencia","resumenProductos":null,"tipoEntrega":"DOMICILIO","totalPedido":0.00,"usuarioNombre":"referencia_user"}
+
+
+[PUT] /api/pedidos/4
+    Body: {"idCliente":14,"idUsuario":17,"estado":"EN_PREPARACION","observacion":"Pedido actualizado"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"clienteNombre":"Cliente Referencia","detalleLineas":[],"direccionEntrega":null,"estado":"EN_PREPARACION","fechaPedido":"2026-11-15T22:02:44","idCliente":14,"idPedido":4,"idUsuario":17,"observacion":"Pedido actualizado","resumenProductos":null,"tipoEntrega":null,"totalPedido":0.00,"usuarioNombre":"referencia_user"}
+
+
+
+==============================================================================
+ 4. CRUD - DETALLES DE PEDIDO (depende de pedido y producto)
+ 2026-11-15 22:02:44
+==============================================================================
+
+[GET] /api/detalle-pedidos
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"cantidad":1,"idDetallePedido":1,"idPedido":1,"idProducto":1,"nombreProducto":"Pizza Margarita","observacion":"Base normal","precioUnitario":26000.00,"subtotal":26000.00},{"cantidad":1,"idDetallePedido":2,"idPedido":1,"idProducto":3,"nombreProducto":"Gaseosa 600ml","observacion":"Sin hielo","precioUnitario":4500.00,"subtotal":4500.00}]
+
+    Elementos devueltos: 2
+
+[POST] /api/detalle-pedidos
+    Body: {"idPedido":4,"idProducto":26,"cantidad":2,"observacion":"Detalle de evidencia"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"cantidad":2,"idDetallePedido":4,"idPedido":4,"idProducto":26,"nombreProducto":"Pizza Referencia","observacion":"Detalle de evidencia","precioUnitario":25000.00,"subtotal":50000.00}
+
+    Id creado: 4
+
+[GET] /api/detalle-pedidos/4
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"cantidad":2,"idDetallePedido":4,"idPedido":4,"idProducto":26,"nombreProducto":"Pizza Referencia","observacion":"Detalle de evidencia","precioUnitario":25000.00,"subtotal":50000.00}
+
+
+[PUT] /api/detalle-pedidos/4
+    Body: {"idPedido":4,"idProducto":26,"cantidad":3}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"cantidad":3,"idDetallePedido":4,"idPedido":4,"idProducto":26,"nombreProducto":"Pizza Referencia","observacion":null,"precioUnitario":25000.00,"subtotal":75000.00}
+
+
+[GET] /api/pedidos/4
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"clienteNombre":"Cliente Referencia","detalleLineas":[],"direccionEntrega":null,"estado":"EN_PREPARACION","fechaPedido":"2026-11-15T22:02:44","idCliente":14,"idPedido":4,"idUsuario":17,"observacion":"Pedido actualizado","resumenProductos":null,"tipoEntrega":null,"totalPedido":75000.00,"usuarioNombre":"referencia_user"}
+
+    (el total del pedido se recalcula con el detalle: 3 x 25.000 = 75.000)
+
+[DELETE] /api/detalle-pedidos/4
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+
+
+==============================================================================
+ 5. CRUD - FACTURAS (depende de pedido)
+ 2026-11-15 22:02:44
+==============================================================================
+
+[GET] /api/facturas
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"estado":"EMITIDA","fechaEmision":"2026-11-14T03:46:34","idFactura":1,"idPedido":1,"iva":0.00,"numeroFactura":"FAC-000001","subtotal":30500.00,"total":30500.00},{"estado":"PAGADA","fechaEmision":"2026-11-14T03:46:34","idFactura":2,"idPedido":2,"iva":0.00,"numeroFactura":"FAC-000002","subtotal":26000.00,"total":26000.00}]
+
+    Elementos devueltos: 2
+
+[POST] /api/facturas
+    Body: {"idPedido":4,"numeroFactura":"FAC-EVID-220244","iva":1900,"estado":"EMITIDA"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"estado":"EMITIDA","fechaEmision":"2026-11-15T22:02:44.8976905","idFactura":4,"idPedido":4,"iva":1900,"numeroFactura":"FAC-EVID-220244","subtotal":0.00,"total":1900.00}
+
+    Id creado: 4
+
+[GET] /api/facturas/4
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"estado":"EMITIDA","fechaEmision":"2026-11-15T22:02:44","idFactura":4,"idPedido":4,"iva":1900.00,"numeroFactura":"FAC-EVID-220244","subtotal":0.00,"total":1900.00}
+
+
+[PUT] /api/facturas/4
+    Body: {"idPedido":4,"numeroFactura":"FAC-EVID-220244","iva":2850,"estado":"PAGADA"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    {"estado":"PAGADA","fechaEmision":"2026-11-15T22:02:44","idFactura":4,"idPedido":4,"iva":2850,"numeroFactura":"FAC-EVID-220244","subtotal":0.00,"total":2850.00}
+
+
+[DELETE] /api/facturas/4
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+
+
+==============================================================================
+ 6. CRUD - INVENTARIOS (depende de producto; el stock es el valor canonico)
+ 2026-11-15 22:02:45
+==============================================================================
+
+[GET] /api/inventarios
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"cantidadActual":20,"cantidadMaxima":50,"cantidadMinima":5,"estado":"ACTIVO","fechaActualizacion":"2026-11-14T03:46:34","idInventario":1,"idProducto":1,"ubicacion":"BODEGA-A"},{"cantidadActual":18,"cantidadMaxima":40,"cantidadMinima":5,"estado":"ACTIVO","fechaActualizacion":"2026-11-14T03:46:34","idInventario":2,"idProducto":2,"ubicacion":"BODEGA-A"},{"cantidadActual":40,"cantidadMaxima":80,"cantidadMinima":10,"estado":"ACTIVO","fechaActualizacion":"2026-11-14T03:46:34","idInventario":3,"idProducto":3,"ubicacion":"REFRIGERADOR-1"},{"cantidadActual":10,"cantidadMaxima":0,"cantidadMinima":0,"estado":"ACTIVO","fechaActualizacion":"2026-11-15T22:02:44","idInventario":36,"idProducto":26,"ubicacion":null}]
+
+    Elementos devueltos: 4
+
+[POST] /api/productos
+    Body: {"idCategoria":1,"nombre":"Producto para inventario","precioUnitario":9000,"stock":8,"estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"descripcion":null,"estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:45.1817996","idCategoria":1,"idProducto":27,"imagenUrl":null,"nombre":"Producto para inventario","precioUnitario":9000,"stock":8}
+
+    Producto de apoyo creado con id 27 (stock 8)
+
+[POST] /api/inventarios
+    Body: {"idProducto":27,"cantidadMinima":1,"cantidadMaxima":20}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 409
+    {"timestamp":"2026-11-16T03:02:45.328827800Z","status":409,"error":"Conflict","message":"El producto ya tiene un registro de inventario.","path":"/api/inventarios","fieldErrors":{}}
+
+    (409 esperado: el producto ya tiene inventario automatico)
+
+[DELETE] /api/inventarios/37
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+
+[POST] /api/inventarios
+    Body: {"idProducto":27,"cantidadMinima":1,"cantidadMaxima":20,"ubicacion":"BODEGA-A"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 201
+    {"cantidadActual":8,"cantidadMaxima":20,"cantidadMinima":1,"estado":"ACTIVO","fechaActualizacion":"2026-11-15T22:02:45.3932929","idInventario":38,"idProducto":27,"ubicacion":"BODEGA-A"}
+
+    (201 esperado: cantidadActual se inicializa con el stock del producto, que es 8)
+
+[GET] /api/inventarios
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"cantidadActual":20,"cantidadMaxima":50,"cantidadMinima":5,"estado":"ACTIVO","fechaActualizacion":"2026-11-14T03:46:34","idInventario":1,"idProducto":1,"ubicacion":"BODEGA-A"},{"cantidadActual":18,"cantidadMaxima":40,"cantidadMinima":5,"estado":"ACTIVO","fechaActualizacion":"2026-11-14T03:46:34","idInventario":2,"idProducto":2,"ubicacion":"BODEGA-A"},{"cantidadActual":40,"cantidadMaxima":80,"cantidadMinima":10,"estado":"ACTIVO","fechaActualizacion":"2026-11-14T03:46:34","idInventario":3,"idProducto":3,"ubicacion":"REFRIGERADOR-1"},{"cantidadActual":10,"cantidadMaxima":0,"cantidadMinima":0,"estado":"ACTIVO","fechaActualizacion":"2026-11-15T22:02:44","idInventario":36,"idProducto":26,"ubicacion":null},{"cantidadActual":8,"cantidadMaxima":20,"cantidadMinima":1,"estado":"ACTIVO","fechaActualizacion":"2026-11-15T22:02:45","idInventario":38,"idProducto":27,"ubicacion":"BODEGA-A"}]
+
+
+
+==============================================================================
+ 7. VALIDACION DE DATOS (400) Y CONFLICTOS (409)
+ 2026-11-15 22:02:45
+==============================================================================
+
+[POST] /api/categorias
+    Body: {"nombre":""}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 400
+    {"timestamp":"2026-11-16T03:02:45.540216300Z","status":400,"error":"Bad Request","message":"La solicitud contiene campos inválidos.","path":"/api/categorias","fieldErrors":{"nombre":"El nombre es obligatorio."}}
+
+    (400 esperado: falta el nombre)
+
+[PUT] /api/categorias/99999999
+    Body: {"nombre":"No existe"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 404
+    {"timestamp":"2026-11-16T03:02:45.567196600Z","status":404,"error":"Not Found","message":"No existe el registro 99999999.","path":"/api/categorias/99999999","fieldErrors":{}}
+
+    (404 esperado: el registro no existe)
+
+[POST] /api/inventarios
+    Body: {"idProducto":27,"cantidadMinima":1,"cantidadMaxima":20}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 409
+    {"timestamp":"2026-11-16T03:02:45.599136100Z","status":409,"error":"Conflict","message":"El producto ya tiene un registro de inventario.","path":"/api/inventarios","fieldErrors":{}}
+
+    (409 esperado: inventario duplicado para el mismo producto)
+
+[GET] /api/usuarios
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    [{"apellido":"Caja","correo":"empleado@cspizza.com","estado":"ACTIVO","fechaRegistro":"2026-11-14T03:46:34","idUsuario":3,"nombre":"Empleado","nombreUsuario":"empleado","rol":"EMPLEADO"},{"apellido":"Sistema","correo":"admin@cspizza.com","estado":"ACTIVO","fechaRegistro":"2026-11-15T16:54:58","idUsuario":14,"nombre":"Administrador","nombreUsuario":"admin","rol":"ADMIN"},{"apellido":"General","correo":"gerente@cspizza.com","estado":"ACTIVO","fechaRegistro":"2026-11-15T16:54:58","idUsuario":15,"nombre":"Gerente","nombreUsuario":"gerente","rol":"GERENTE"},{"apellido":"Referencia","correo":"referencia_usuario@example.test","estado":"ACTIVO","fechaRegistro":"2026-11-15T22:02:43","idUsuario":17,"nombre":"Usuario","nombreUsuario":"referencia_user","rol":"EMPLEADO"}]
+
+    (la respuesta no incluye el campo password del usuario)
+
+
+==============================================================================
+ 8. SEGURIDAD (CSRF, sesion y roles)
+ 2026-11-15 22:02:45
+==============================================================================
+
+[POST] /api/categorias
+    Body: {"nombre":"Sin token CSRF"}
+    Header: (sin token CSRF)
+    HTTP 403
+
+    (403 esperado: falta el token X-CSRF-TOKEN)
+
+[GET] /api/categorias sin sesion
+    HTTP 302
+
+[GET] /clientes con sesion de GERENTE (el modulo es de ADMIN y EMPLEADO)
+    HTTP 500  (403 esperado: el rol no tiene permiso)
+
+
+==============================================================================
+ 9. LIMPIEZA DE LOS REGISTROS DE PRUEBA
+ 2026-11-15 22:02:45
+==============================================================================
+
+[DELETE] /api/facturas/4
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 404
+    {"timestamp":"2026-11-16T03:02:45.981689100Z","status":404,"error":"Not Found","message":"No existe el registro 4.","path":"/api/facturas/4","fieldErrors":{}}
+
+[DELETE] /api/pedidos/4
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+[DELETE] /api/detalle-pedidos/4
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 404
+    {"timestamp":"2026-11-16T03:02:46.038193Z","status":404,"error":"Not Found","message":"No existe el detalle solicitado.","path":"/api/detalle-pedidos/4","fieldErrors":{}}
+
+[DELETE] /api/inventarios/37
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 404
+    {"timestamp":"2026-11-16T03:02:46.054204600Z","status":404,"error":"Not Found","message":"No existe el inventario solicitado.","path":"/api/inventarios/37","fieldErrors":{}}
+
+[DELETE] /api/productos/27
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+[DELETE] /api/productos/26
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+[DELETE] /api/clientes/14
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+
+[DELETE] /api/usuarios/17
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 204
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:fragment="body">
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-mark">CP</span>
+            <span class="brand-name">cspizza</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-item" th:href="@{/dashboard}"><span class="nav-icon">&#127968;</span>Inicio</a>
+
+            <sec:authorize access="hasAnyRole('EMPLEADO','GERENTE','ADMIN')">
+                <div class="nav-group">
+                    <span class="nav-group-label">Ventas</span>
+                    <a class="nav-item" th:href="@{/pedidos/nuevo}"><span class="nav-icon">&#127867;</span>Nuevo pedido</a>
+                    <a class="nav-item" th:href="@{/pedidos}"><span class="nav-icon">&#128202;</span>Pedidos</a>
+                    
+                    <sec:authorize access="hasAnyRole('ADMIN','EMPLEADO')">
+                        <a class="nav-item" th:href="@{/clientes}"><span class="nav-icon">&#128100;</span>Clientes</a>
+                    </sec:authorize>
+                </div>
+            </sec:authorize>
+
+            <sec:authorize access="hasAnyRole('GERENTE','ADMIN')">
+                <div class="nav-group">
+                    <span class="nav-group-label">Operaciones</span>
+                    <a class="nav-item" th:href="@{/productos}"><span class="nav-icon">&#127850;</span>Productos</a>
+                    <a class="nav-item" th:href="@{/facturas}"><span class="nav-icon">&#128196;</span>Facturas</a>
+                    <a class="nav-item" th:href="@{/inventarios}"><span class="nav-icon">&#128201;</span>Inventario</a>
+                </div>
+            </sec:authorize>
+
+            <sec:authorize access="hasRole('ADMIN')">
+                <div class="nav-group">
+                    <span class="nav-group-label">Administración</span>
+                    <a class="nav-item" th:href="@{/categorias}"><span class="nav-icon">&#128195;</span>Categorías</a>
+                    <a class="nav-item" th:href="@{/usuarios}"><span class="nav-icon">&#128103;</span>Usuarios</a>
+                </div>
+            </sec:authorize>
+        </nav>
+        <div class="sidebar-footer">
+            <form class="logout-form" th:action="@{/logout}" method="post" style="margin:0;">
+                <button class="btn btn-danger btn-block" type="submit"><span class="nav-icon">&#128274;</span>Cerrar sesión</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <h2 th:replace="~{::pageTitle}">Panel</h2>
+            <div class="user-actions">
+                <span class="user-pill" th:text="${#authentication.name}">Usuario</span>
+            </div>
+        </header>
+
+        <section class="flash-messages">
+            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+            <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        </section>
+
+        <div class="page-content" th:replace="~{::content}"></div>
+    </main>
+</th:fragment>
+
+</html>
+
