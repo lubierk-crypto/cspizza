@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle de pedido | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="container">
+        <header class="topbar">
+            <h2>Detalle de pedido</h2>
+            <div class="user-actions">
+                <a class="logout-link" th:href="@{/detalle-pedidos}">Cancelar</a>
+            </div>
+        </header>
+
+        <section class="card" style="margin-top:24px; max-width:720px;">
+            <form th:action="@{/detalle-pedidos/guardar}" th:object="${detallePedido}" method="post">
+                <input type="hidden" th:field="*{idDetallePedido}" />
+
+                <div class="form-group">
+                    <label for="idPedido">Pedido</label>
+                    <input id="idPedido" class="form-control" type="number" th:field="*{idPedido}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="idProducto">Producto</label>
+                    <input id="idProducto" class="form-control" type="number" th:field="*{idProducto}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="cantidad">Cantidad</label>
+                    <input id="cantidad" class="form-control" type="number" th:field="*{cantidad}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="precioUnitario">Precio unitario</label>
+                    <input id="precioUnitario" class="form-control" type="number" step="0.01" th:field="*{precioUnitario}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="subtotal">Subtotal</label>
+                    <input id="subtotal" class="form-control" type="number" step="0.01" th:field="*{subtotal}" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
