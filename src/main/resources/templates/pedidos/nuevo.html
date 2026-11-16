@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuevo pedido | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="brand-mark">CP</span>
+                <span class="brand-name">cspizza</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item" th:href="@{/dashboard}"><span class="nav-icon">&#127968;</span>Inicio</a>
+                <sec:authorize access="hasAnyRole('EMPLEADO','GERENTE','ADMIN')">
+                    <div class="nav-group">
+                        <span class="nav-group-label">Ventas</span>
+                        <a class="nav-item" th:href="@{/pedidos/nuevo}"><span class="nav-icon">&#127867;</span>Nuevo pedido</a>
+                        <a class="nav-item" th:href="@{/pedidos}"><span class="nav-icon">&#128202;</span>Pedidos</a>
+                        
+                        <sec:authorize access="hasAnyRole('ADMIN','EMPLEADO')">
+                            <a class="nav-item" th:href="@{/clientes}"><span class="nav-icon">&#128100;</span>Clientes</a>
+                        </sec:authorize>
+                    </div>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('GERENTE','ADMIN')">
+                    <div class="nav-group">
+                        <span class="nav-group-label">Operaciones</span>
+                        <a class="nav-item" th:href="@{/productos}"><span class="nav-icon">&#127850;</span>Productos</a>
+                        <a class="nav-item" th:href="@{/facturas}"><span class="nav-icon">&#128196;</span>Facturas</a>
+                        <a class="nav-item" th:href="@{/inventarios}"><span class="nav-icon">&#128201;</span>Inventario</a>
+                    </div>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <div class="nav-group">
+                        <span class="nav-group-label">Administración</span>
+                        <a class="nav-item" th:href="@{/categorias}"><span class="nav-icon">&#128195;</span>Categorías</a>
+                        <a class="nav-item" th:href="@{/usuarios}"><span class="nav-icon">&#128103;</span>Usuarios</a>
+                    </div>
+                </sec:authorize>
+            </nav>
+            <div class="sidebar-footer">
+                <form class="logout-form" th:action="@{/logout}" method="post" style="margin:0;">
+                    <button class="btn btn-danger btn-block" type="submit"><span class="nav-icon">&#128274;</span>Cerrar sesión</button>
+                </form>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <h2>Nuevo pedido</h2>
+                <div class="user-actions">
+                    <a class="btn btn-secondary btn-sm" th:href="@{/pedidos}">Volver a pedidos</a>
+                </div>
+            </header>
+            <section class="flash-messages">
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-error"
+                     th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
+            </section>
+            <div class="page-content" style="display:flex; flex-wrap:wrap; gap:24px;">
+                <section class="card" style="flex:1; min-width:320px; max-width:520px; margin-top:0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h3 style="margin:0;">Catálogo</h3>
+                    </div>
+                    <div class="toolbar" style="margin-bottom:14px;">
+                        <div class="search-box" style="flex:1; min-width:180px;">
+                            <span class="search-icon">&#128269;</span>
+                            <input type="text" id="buscadorProducto" class="form-control" placeholder="Buscar producto..." />
+                        </div>
+                        <select id="filtroCategoria" class="form-control" style="width:200px;">
+                            <option value="">Todas las categorías</option>
+                            <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombre}"></option>
+                        </select>
+                    </div>
+                    <div class="card" style="margin:0 0 14px 0; padding:12px 14px; background:var(--gray-50);">
+                        <div style="display:flex; gap:8px; align-items:end; flex-wrap:wrap;">
+                            <div style="flex:2; min-width:200px;">
+                                <label for="manualProducto" style="font-size:0.85rem; font-weight:700;">Producto (escribe el nombre)</label>
+                                <input type="text" id="manualProducto" class="form-control" list="listaProductos"
+                                       placeholder="Ej. Pizza Pepperoni" />
+                                <datalist id="listaProductos">
+                                    <option th:each="producto : ${productos}"
+                                            th:value="${producto.nombre}" />
+                                </datalist>
+                            </div>
+                            <div style="width:90px;">
+                                <label for="manualCantidad" style="font-size:0.85rem; font-weight:700;">Cant.</label>
+                                <input type="number" id="manualCantidad" class="form-control" value="1" min="1" />
+                            </div>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="agregarManual()">Agregar</button>
+                        </div>
+                    </div>
+                    <div id="catalogoProductos" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:12px; max-height:60vh; overflow-y:auto; padding-right:8px;">
+                    </div>
+                </section>
+                <section class="card" style="flex:0 0 380px; margin-top:0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h3 style="margin:0;">Pedido actual</h3>
+                        <span id="contadorItems" class="badge badge-activo" style="font-size:0.85rem;">(0 ítems)</span>
+                    </div>
+                    <form th:action="@{/pedidos/nuevo}" th:object="${pedidoNuevo}" method="post" id="formPedido">
+                        <div class="form-group">
+                            <label for="clienteNombre">Cliente</label>
+                            <input id="clienteNombre" class="form-control" type="text"
+                                   name="clienteNombre" list="listaClientes"
+                                   placeholder="Escribe el nombre del cliente (nuevo o existente)" />
+                            <datalist id="listaClientes">
+                                <option th:each="cliente : ${clientes}"
+                                        th:value="${cliente.nombre} + (${cliente.apellido} != null and ${cliente.apellido} != '' ? ' ' + ${cliente.apellido} : '')" />
+                            </datalist>
+                            <small class="input-hint">Si el cliente no existe, se crea automáticamente. Vacío = Cliente Mostrador.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoEntrega">Tipo de entrega</label>
+                            <select id="tipoEntrega" class="form-control" th:field="*{tipoEntrega}" required>
+                                <option value="LOCAL">Local (mesa)</option>
+                                <option value="RECOGER">Recoger</option>
+                                <option value="DOMICILIO">Domicilio</option>
+                            </select>
+                            <div class="alert alert-error" th:if="${#fields.hasErrors('tipoEntrega')}" th:errors="*{tipoEntrega}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccionEntrega">Dirección de entrega</label>
+                            <input id="direccionEntrega" class="form-control" type="text" th:field="*{direccionEntrega}" />
+                            <small class="input-hint">Obligatorio si el tipo es Domicilio.</small>
+                            <div class="alert alert-error" th:if="${#fields.hasErrors('direccionEntrega')}" th:errors="*{direccionEntrega}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="observacion">Observación general</label>
+                            <textarea id="observacion" class="form-control" th:field="*{observacion}" rows="2"
+                                      placeholder="Ej. Sin cebolla"></textarea>
+                            <div class="alert alert-error" th:if="${#fields.hasErrors('observacion')}" th:errors="*{observacion}"></div>
+                        </div>
+                        <div style="border-top:1px solid #ddd; padding-top:14px; margin-top:14px;">
+                            <table style="width:100%; border-collapse:collapse;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left;">Producto</th>
+                                        <th style="text-align:right;">Precio</th>
+                                        <th style="text-align:center;">Cant.</th>
+                                        <th style="text-align:right;">Subtotal</th>
+                                        <th style="text-align:center;">Quitar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cuerpoDetalle"></tbody>
+                            </table>
+                        </div>
+                        <div style="margin-top:14px; text-align:right; font-weight:bold; font-size:1.2rem;">
+                            Total: <span id="totalPedido">$0.00</span>
+                        </div>
+                        <input type="hidden" id="totalPedidoInput" name="totalPedido" value="0" />
+                        <button type="submit" class="btn btn-primary btn-block" style="margin-top:18px;"
+                                id="btnGuardarPedido">
+                            Guardar pedido
+                        </button>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script th:inline="javascript">
+        window.__productos__ = /*[[${productos}]]*/ [];
+        window.__categorias__ = /*[[${categorias}]]*/ [];
+    </script>
+    <script th:src="@{/js/pedido-nuevo.js}"></script>
+</body>
+</html>
+

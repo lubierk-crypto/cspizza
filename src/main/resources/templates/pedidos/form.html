@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pedido | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="brand-mark">CP</span>
+                <span class="brand-name">cspizza</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item" th:href="@{/dashboard}"><span class="nav-icon">&#127968;</span>Inicio</a>
+                <sec:authorize access="hasAnyRole('EMPLEADO','GERENTE','ADMIN')">
+                    <div class="nav-group">
+                        <span class="nav-group-label">Ventas</span>
+                        <a class="nav-item" th:href="@{/pedidos/nuevo}"><span class="nav-icon">&#127867;</span>Nuevo pedido</a>
+                        <a class="nav-item" th:href="@{/pedidos}"><span class="nav-icon">&#128202;</span>Pedidos</a>
+                        
+                        <sec:authorize access="hasAnyRole('ADMIN','EMPLEADO')">
+                            <a class="nav-item" th:href="@{/clientes}"><span class="nav-icon">&#128100;</span>Clientes</a>
+                        </sec:authorize>
+                    </div>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('GERENTE','ADMIN')">
+                    <div class="nav-group">
+                        <span class="nav-group-label">Operaciones</span>
+                        <a class="nav-item" th:href="@{/productos}"><span class="nav-icon">&#127850;</span>Productos</a>
+                        <a class="nav-item" th:href="@{/facturas}"><span class="nav-icon">&#128196;</span>Facturas</a>
+                        <a class="nav-item" th:href="@{/inventarios}"><span class="nav-icon">&#128201;</span>Inventario</a>
+                    </div>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <div class="nav-group">
+                        <span class="nav-group-label">Administración</span>
+                        <a class="nav-item" th:href="@{/categorias}"><span class="nav-icon">&#128195;</span>Categorías</a>
+                        <a class="nav-item" th:href="@{/usuarios}"><span class="nav-icon">&#128103;</span>Usuarios</a>
+                    </div>
+                </sec:authorize>
+            </nav>
+            <div class="sidebar-footer">
+                <form class="logout-form" th:action="@{/logout}" method="post" style="margin:0;">
+                    <button class="btn btn-danger btn-block" type="submit"><span class="nav-icon">&#128274;</span>Cerrar sesión</button>
+                </form>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <h2>Pedido</h2>
+                <div class="user-actions">
+                    <a class="btn btn-outline btn-sm" th:href="@{/pedidos}">Volver a pedidos</a>
+                </div>
+            </header>
+            <section class="flash-messages">
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+            </section>
+            <div class="page-content">
+                <section class="card" style="margin-top:24px; max-width:900px;">
+                    <form th:action="@{/pedidos/guardar}" th:object="${pedido}" method="post">
+                        <input type="hidden" th:field="*{idPedido}" />
+                        <div class="alert alert-error" th:if="${#fields.hasGlobalErrors()}"
+                             th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
+                        <div class="form-group">
+                            <label for="idCliente">Cliente</label>
+                            <select id="idCliente" class="form-control" th:field="*{idCliente}">
+                                <option value="">-- Seleccione un cliente --</option>
+                                <option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.nombre} + ' ' + ${cliente.apellido}"></option>
+                            </select>
+                            <div class="alert alert-error" th:if="${#fields.hasErrors('idCliente')}" th:errors="*{idCliente}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="idUsuario">Usuario</label>
+                            <select id="idUsuario" class="form-control" th:field="*{idUsuario}">
+                                <option value="">-- Seleccione un usuario --</option>
+                                <option th:each="usuario : ${usuarios}" th:value="${usuario.idUsuario}" th:text="${usuario.nombreUsuario} + ' (' + ${usuario.nombre} + ' ' + ${usuario.apellido} + ')'"></option>
+                            </select>
+                            <div class="alert alert-error" th:if="${#fields.hasErrors('idUsuario')}" th:errors="*{idUsuario}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <select id="estado" class="form-control" th:field="*{estado}">
+                                <option value="PENDIENTE">Pendiente</option>
+                                <option value="EN_PREPARACION">En preparación</option>
+                                <option value="LISTO">Listo</option>
+                                <option value="ENTREGADO">Entregado</option>
+                                <option value="CANCELADO">Cancelado</option>
+                            </select>
+                            <div class="alert alert-error" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoEntrega">Tipo de entrega</label>
+                            <select id="tipoEntrega" class="form-control" th:field="*{tipoEntrega}">
+                                <option value="LOCAL">Local</option>
+                                <option value="RECOGER">Recoger</option>
+                                <option value="DOMICILIO">Domicilio</option>
+                            </select>
+                            <div class="alert alert-error" th:if="${#fields.hasErrors('tipoEntrega')}" th:errors="*{tipoEntrega}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccionEntrega">Dirección de entrega</label>
+                            <input id="direccionEntrega" class="form-control" type="text" th:field="*{direccionEntrega}" />
+                            <div class="alert alert-error" th:if="${#fields.hasErrors('direccionEntrega')}" th:errors="*{direccionEntrega}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="observacion">Observación</label>
+                            <textarea id="observacion" class="form-control" th:field="*{observacion}" rows="3"></textarea>
+                            <div class="alert alert-error" th:if="${#fields.hasErrors('observacion')}" th:errors="*{observacion}"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>
+
