@@ -178,3 +178,6 @@ Tablero con columnas Pendiente / En preparación / Listo. Cada tarjeta muestra l
 | Método | Ruta | Descripción |
 | --- | --- | --- |
 | `POST` | `/api/pedidos/completo` | Crea un pedido con múltiples productos en una sola transacción. Requiere autenticación y CSRF. |
+
+## Contribuciones
+Rama de prueba para el ejercicio de Pull Request.
