@@ -1,0 +1,1169 @@
+﻿{
+    "info":  {
+                 "name":  "CSPizza API",
+                 "description":  "CRUD REST de los ocho modulos. Ejecuta primero Autenticacion y CSRF; usa un rol autorizado y envia el token CSRF en POST/PUT/DELETE. Los IDs y datos de ejemplo se pueden ajustar en las variables de coleccion. Las credenciales predeterminadas son solo para desarrollo.",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "item":  [
+                 {
+                     "name":  "Autenticacion y CSRF",
+                     "item":  [
+                                  {
+                                      "name":  "1. Obtener formulario y token CSRF",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/login",
+                                                      "description":  "Obtiene la cookie de sesion y guarda el token CSRF."
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "const match = pm.response.text().match(/name=\"_csrf\"[^\u003e]*value=\"([^\"]+)\"/); if (match) pm.collectionVariables.set(\"csrfToken\", match[1]); else console.warn(\"No se encontro el token CSRF en la pagina de login.\");"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "2. Iniciar sesion",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/x-www-form-urlencoded"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "urlencoded",
+                                                                   "urlencoded":  [
+                                                                                      {
+                                                                                          "key":  "username",
+                                                                                          "value":  "{{username}}",
+                                                                                          "type":  "text"
+                                                                                      },
+                                                                                      {
+                                                                                          "key":  "password",
+                                                                                          "value":  "{{password}}",
+                                                                                          "type":  "text"
+                                                                                      },
+                                                                                      {
+                                                                                          "key":  "_csrf",
+                                                                                          "value":  "{{csrfToken}}",
+                                                                                          "type":  "text"
+                                                                                      }
+                                                                                  ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/login",
+                                                      "description":  "Cuenta local de desarrollo configurada por defecto en SecurityConfig."
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Autenticacion aceptada\", () =\u003e pm.expect(pm.response.code).to.be.oneOf([200, 302]));"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "3. Renovar token CSRF",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/login",
+                                                      "description":  "Actualiza el token tras la autenticaci?n."
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "const match = pm.response.text().match(/name=\"_csrf\"[^\u003e]*value=\"([^\"]+)\"/); if (match) pm.collectionVariables.set(\"csrfToken\", match[1]); else console.warn(\"No se encontro el token CSRF en la pagina de login.\");"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Categorias",
+                     "item":  [
+                                  {
+                                      "name":  "Listar",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/categorias",
+                                                      "description":  "Lista categorias."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Buscar por ID",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/categorias/{{categoriaId}}",
+                                                      "description":  "Busca un registro de categorias."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Crear",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/categorias",
+                                                      "description":  "Crea un registro de categorias.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"nombre\": \"Postman Pizzas\",\n  \"descripcion\": \"Categoria de ejemplo\",\n  \"estado\": \"ACTIVO\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "if (pm.response.code === 201) { const data = pm.response.json(); if (data.idCategoria != null) pm.collectionVariables.set(\"categoriaId\", String(data.idCategoria)); }"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "Actualizar",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/categorias/{{categoriaId}}",
+                                                      "description":  "Actualiza un registro de categorias.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"nombre\": \"Postman Pizzas\",\n  \"descripcion\": \"Categoria de ejemplo\",\n  \"estado\": \"ACTIVO\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Eliminar",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/categorias/{{categoriaId}}",
+                                                      "description":  "Elimina un registro de categorias."
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Clientes",
+                     "item":  [
+                                  {
+                                      "name":  "Listar",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/clientes",
+                                                      "description":  "Lista clientes."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Buscar por ID",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/clientes/{{clienteId}}",
+                                                      "description":  "Busca un registro de clientes."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Crear",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/clientes",
+                                                      "description":  "Crea un registro de clientes.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"nombre\": \"Postman\",\n  \"apellido\": \"Cliente\",\n  \"telefono\": \"3000000000\",\n  \"correo\": \"postman-cliente@example.test\",\n  \"direccion\": \"Calle 1\",\n  \"estado\": \"ACTIVO\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "if (pm.response.code === 201) { const data = pm.response.json(); if (data.idCliente != null) pm.collectionVariables.set(\"clienteId\", String(data.idCliente)); }"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "Actualizar",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/clientes/{{clienteId}}",
+                                                      "description":  "Actualiza un registro de clientes.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"nombre\": \"Postman\",\n  \"apellido\": \"Cliente\",\n  \"telefono\": \"3000000000\",\n  \"correo\": \"postman-cliente@example.test\",\n  \"direccion\": \"Calle 1\",\n  \"estado\": \"ACTIVO\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Eliminar",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/clientes/{{clienteId}}",
+                                                      "description":  "Elimina un registro de clientes."
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Usuarios",
+                     "item":  [
+                                  {
+                                      "name":  "Listar",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/usuarios",
+                                                      "description":  "Lista usuarios."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Buscar por ID",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/usuarios/{{usuarioId}}",
+                                                      "description":  "Busca un registro de usuarios."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Crear",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/usuarios",
+                                                      "description":  "Crea un registro de usuarios.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"nombreUsuario\": \"postman-user\",\n  \"nombre\": \"Postman\",\n  \"apellido\": \"Usuario\",\n  \"rol\": \"EMPLEADO\",\n  \"correo\": \"postman-user@example.test\",\n  \"password\": \"ChangeMe123!\",\n  \"estado\": \"ACTIVO\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "if (pm.response.code === 201) { const data = pm.response.json(); if (data.idUsuario != null) pm.collectionVariables.set(\"usuarioId\", String(data.idUsuario)); }"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "Actualizar",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/usuarios/{{usuarioId}}",
+                                                      "description":  "Actualiza un registro de usuarios.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"nombreUsuario\": \"postman-user\",\n  \"nombre\": \"Postman\",\n  \"apellido\": \"Usuario\",\n  \"rol\": \"EMPLEADO\",\n  \"correo\": \"postman-user@example.test\",\n  \"password\": \"ChangeMe123!\",\n  \"estado\": \"ACTIVO\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Eliminar",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/usuarios/{{usuarioId}}",
+                                                      "description":  "Elimina un registro de usuarios."
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Productos",
+                     "item":  [
+                                  {
+                                      "name":  "Listar",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/productos",
+                                                      "description":  "Lista productos."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Buscar por ID",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/productos/{{productoId}}",
+                                                      "description":  "Busca un registro de productos."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Crear",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/productos",
+                                                      "description":  "Crea un registro de productos.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idCategoria\": \"{{categoriaId}}\",\n  \"nombre\": \"Producto Postman\",\n  \"descripcion\": \"Ejemplo API\",\n  \"precioUnitario\": 12000,\n  \"stock\": 20,\n  \"estado\": \"ACTIVO\",\n  \"imagenUrl\": \"images/pizza-margarita.jpg\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "if (pm.response.code === 201) { const data = pm.response.json(); if (data.idProducto != null) pm.collectionVariables.set(\"productoId\", String(data.idProducto)); }"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "Actualizar",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/productos/{{productoId}}",
+                                                      "description":  "Actualiza un registro de productos.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idCategoria\": \"{{categoriaId}}\",\n  \"nombre\": \"Producto Postman\",\n  \"descripcion\": \"Ejemplo API\",\n  \"precioUnitario\": 12000,\n  \"stock\": 20,\n  \"estado\": \"ACTIVO\",\n  \"imagenUrl\": \"images/pizza-margarita.jpg\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Eliminar",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/productos/{{productoId}}",
+                                                      "description":  "Elimina un registro de productos."
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Pedidos",
+                     "item":  [
+                                  {
+                                      "name":  "Listar",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/pedidos",
+                                                      "description":  "Lista pedidos."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Buscar por ID",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/pedidos/{{pedidoId}}",
+                                                      "description":  "Busca un registro de pedidos."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Crear",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/pedidos",
+                                                      "description":  "Crea un registro de pedidos.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idCliente\": \"{{clienteId}}\",\n  \"idUsuario\": \"{{usuarioId}}\",\n  \"estado\": \"PENDIENTE\",\n  \"observacion\": \"Pedido de ejemplo\",\n  \"tipoEntrega\": \"LOCAL\",\n  \"direccionEntrega\": \"Sucursal principal\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "if (pm.response.code === 201) { const data = pm.response.json(); if (data.idPedido != null) pm.collectionVariables.set(\"pedidoId\", String(data.idPedido)); }"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "Actualizar",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/pedidos/{{pedidoId}}",
+                                                      "description":  "Actualiza un registro de pedidos.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idCliente\": \"{{clienteId}}\",\n  \"idUsuario\": \"{{usuarioId}}\",\n  \"estado\": \"PENDIENTE\",\n  \"observacion\": \"Pedido de ejemplo\",\n  \"tipoEntrega\": \"LOCAL\",\n  \"direccionEntrega\": \"Sucursal principal\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Eliminar",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/pedidos/{{pedidoId}}",
+                                                      "description":  "Elimina un registro de pedidos."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Crear pedido completo (POS)",
+                                      "request":  {
+                                                      "body":  {
+                                                                   "raw":  "{\n  \"idCliente\": \"{{clienteId}}\",\n  \"tipoEntrega\": \"DOMICILIO\",\n  \"direccionEntrega\": \"Calle 1 #2-3\",\n  \"observacion\": \"Sin cebolla\",\n  \"items\": [\n    {\n      \"idProducto\": \"{{productoId}}\",\n      \"cantidad\": 2,\n      \"observacion\": \"Sin hielo\"\n    }\n  ]\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               },
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "method":  "POST",
+                                                      "url":  "{{baseUrl}}/api/pedidos/completo",
+                                                      "description":  "Crea un pedido completo con productos en una sola transaccion.",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Detalles de pedido",
+                     "item":  [
+                                  {
+                                      "name":  "Listar",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/detalle-pedidos",
+                                                      "description":  "Lista detalles de pedido."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Buscar por ID",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/detalle-pedidos/{{detallePedidoId}}",
+                                                      "description":  "Busca un registro de detalles de pedido."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Crear",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/detalle-pedidos",
+                                                      "description":  "Crea un registro de detalles de pedido.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idPedido\": \"{{pedidoId}}\",\n  \"idProducto\": \"{{productoId}}\",\n  \"cantidad\": 2,\n  \"observacion\": \"Ejemplo Postman\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "if (pm.response.code === 201) { const data = pm.response.json(); if (data.idDetallePedido != null) pm.collectionVariables.set(\"detallePedidoId\", String(data.idDetallePedido)); }"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "Actualizar",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/detalle-pedidos/{{detallePedidoId}}",
+                                                      "description":  "Actualiza un registro de detalles de pedido.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idPedido\": \"{{pedidoId}}\",\n  \"idProducto\": \"{{productoId}}\",\n  \"cantidad\": 2,\n  \"observacion\": \"Ejemplo Postman\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Eliminar",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/detalle-pedidos/{{detallePedidoId}}",
+                                                      "description":  "Elimina un registro de detalles de pedido."
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Facturas",
+                     "item":  [
+                                  {
+                                      "name":  "Listar",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/facturas",
+                                                      "description":  "Lista facturas."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Buscar por ID",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/facturas/{{facturaId}}",
+                                                      "description":  "Busca un registro de facturas."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Crear",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/facturas",
+                                                      "description":  "Crea un registro de facturas.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idPedido\": \"{{pedidoId}}\",\n  \"numeroFactura\": \"POSTMAN-0001\",\n  \"iva\": 0,\n  \"estado\": \"EMITIDA\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "if (pm.response.code === 201) { const data = pm.response.json(); if (data.idFactura != null) pm.collectionVariables.set(\"facturaId\", String(data.idFactura)); }"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "Actualizar",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/facturas/{{facturaId}}",
+                                                      "description":  "Actualiza un registro de facturas.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idPedido\": \"{{pedidoId}}\",\n  \"numeroFactura\": \"POSTMAN-0001\",\n  \"iva\": 0,\n  \"estado\": \"EMITIDA\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Eliminar",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/facturas/{{facturaId}}",
+                                                      "description":  "Elimina un registro de facturas."
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Inventarios",
+                     "item":  [
+                                  {
+                                      "name":  "Capturar inventario del producto",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/inventarios",
+                                                      "description":  "El servicio de productos crea automaticamente su inventario. Guarda aqui el ID para actualizar o intentar eliminarlo."
+                                                  },
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "const productId = Number(pm.collectionVariables.get(\"productoId\"));",
+                                                                                    "const record = pm.response.json().find(item =\u003e item.idProducto === productId);",
+                                                                                    "if (record) pm.collectionVariables.set(\"inventarioId\", String(record.idInventario));"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "Listar",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/inventarios",
+                                                      "description":  "Lista inventarios."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Buscar por ID",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/inventarios/{{inventarioId}}",
+                                                      "description":  "Busca un registro de inventarios."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Crear",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/inventarios",
+                                                      "description":  "Producto e inventario se crean juntos; enviar otro inventario para el mismo producto devuelve 409 por la regla de unicidad.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idProducto\": \"{{productoId}}\",\n  \"cantidadActual\": 20,\n  \"cantidadMinima\": 5,\n  \"cantidadMaxima\": 50,\n  \"ubicacion\": \"BODEGA-A\",\n  \"estado\": \"ACTIVO\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Actualizar",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/inventarios/{{inventarioId}}",
+                                                      "description":  "Actualiza un registro de inventarios.",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"idProducto\": \"{{productoId}}\",\n  \"cantidadActual\": 20,\n  \"cantidadMinima\": 5,\n  \"cantidadMaxima\": 50,\n  \"ubicacion\": \"BODEGA-A\",\n  \"estado\": \"ACTIVO\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Eliminar",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "X-CSRF-TOKEN",
+                                                                         "value":  "{{csrfToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/inventarios/{{inventarioId}}",
+                                                      "description":  "Elimina el registro de inventario y devuelve 204; el stock canonico del producto no cambia. El inventario puede crearse de nuevo desde el stock actual del producto."
+                                                  }
+                                  }
+                              ]
+                 }
+             ],
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "value":  "http://localhost:8080"
+                     },
+                     {
+                         "key":  "username",
+                         "value":  "admin"
+                     },
+                     {
+                         "key":  "password",
+                         "value":  "admin123"
+                     },
+                     {
+                         "key":  "categoriaId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "clienteId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "detallePedidoId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "facturaId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "inventarioId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "pedidoId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "productoId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "usuarioId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "csrfToken",
+                         "value":  ""
+                     }
+                 ]
+}

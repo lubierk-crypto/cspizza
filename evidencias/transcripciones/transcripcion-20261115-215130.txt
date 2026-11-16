@@ -1,0 +1,2046 @@
+﻿
+==============================================================================
+ 0. AUTENTICACION Y CSRF
+ 2026-11-15 21:51:27
+==============================================================================
+
+[GET] /login  (formulario de inicio de sesion)
+    HTTP 200
+    El formulario incluye el campo oculto _csrf: BS98UhzVWjmrY4pt...
+
+[POST] /login  (username=admin, password=admin123)
+    HTTP 302  ->  se emite la cookie de sesion y el usuario queda autenticado
+
+
+==============================================================================
+ 1. CRUD - CATEGORIAS
+ 2026-11-15 21:51:27
+==============================================================================
+
+[GET] /api/categorias
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="MnQ20DppJX92sYtcVGOWkWcKJTFZLQrMRpjnHr0VvAmJcCqWUUwP5QhbRxpb07xqZE6ipVBrCFA8FTjhIK6FK40jiD2-SU-u"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[POST] /api/categorias
+    Body: {"nombre":"Evidencia Demo","descripcion":"Categoria de prueba","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="9nfvex-qBS2sPBXkSL5WuzzBvdHtle1wy9iukQJxeFYzCsr7lU_WTi2YZ0iBXiLSeJNijwugkLCIrd9dre7MpDJHTGIEM6_D"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Id creado: 
+
+[GET] /api/categorias/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="8Qrx0jdbuiEpb6QJupA6TUOJl9gjAf0DT9y9XiWR66W7OMYZkjLI5wVp2EQEDZM_ir0OeXTourlGOc8uKerfaxWn35GMAaMh"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[PUT] /api/categorias/
+    Body: {"nombre":"Evidencia Demo EDITADA","descripcion":"Actualizada","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:27.803Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[DELETE] /api/categorias/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:27.915Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[GET] /api/categorias/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="wQIdj6_WO8LfgrC5CjVfABxlOHqTiOU8AWfksNev4aeTNMp_ojokup3kWafy4IePOhhrNCsEFRv2sNcRZ1GGheeZ1ZOkDa9H"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (404 esperado: el registro fue eliminado)
+
+
+==============================================================================
+ 1. CRUD - CLIENTES
+ 2026-11-15 21:51:27
+==============================================================================
+
+[GET] /api/clientes
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="Oz1bgVzDRJEimv4zIS9c1KOGpJzen3KahOxcOyeGYKiSv1BLWAVitG7xJvQP-MkFEQJo4JTnif27p0C34to-DhewVJylhjVz"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[POST] /api/clientes
+    Body: {"nombre":"Cliente","apellido":"Evidencia","telefono":"3000000000","correo":"evidencia@example.test","direccion":"Calle 1 #2-3","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="eatx7KxbqobXpgPIjjYfNdtTyXKoDkM0qdAXd7mPi9KR8fEkGpNI2Z5pyOP6xDT-vhsrAewy5BPNNnEZz-Z1Qom5v-amyJQc"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Id creado: 
+
+[GET] /api/clientes/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="M6Ibldwd1bxUrKFoXabra5dKJMUAYV1dVbQog7VJwYSWZUsIUJoioO4vt9l5zpZebYvfX6ArCaRlWW9wM4JKtoV_9bChXC4w"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[PUT] /api/clientes/
+    Body: {"nombre":"Cliente EDITADO","apellido":"Evidencia","correo":"evidencia@example.test","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:28.114Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[DELETE] /api/clientes/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:28.164Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[GET] /api/clientes/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="FrkjXjKtMuEXJID4YX8g8arQZ8TwBF3Iyr9hrNFN8jWQQyw8dYEaawCfUIQ6RrfOUVIUxZ2xSqWVPG_lrIkDmeF7xgGnekkE"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (404 esperado: el registro fue eliminado)
+
+
+==============================================================================
+ 1. CRUD - USUARIOS
+ 2026-11-15 21:51:28
+==============================================================================
+
+[GET] /api/usuarios
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="yoLQUWukPA0Rv8p-caOfRN0wIgGyQp7l-G_BlLiPHZ6RNeytqbrpZFmWXmg83f1IQY6rcOpRD2DXeqzInlmjoYi5KaqmDImV"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[POST] /api/usuarios
+    Body: {"nombreUsuario":"evidencia_user","nombre":"Usuario","apellido":"Evidencia","rol":"EMPLEADO","correo":"evidencia_usuario@example.test","password":"clave-evidencia"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="DOqUg_OsPwmbVjLYtsKe_VUn2nL72JH_zSNk7EyjggR9qOfcb9KttsGeXWy2NAXuhu-qyWJG9xOe4KPSqxUG2XyVtjBKkYLk"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Id creado: 
+
+[GET] /api/usuarios/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="nlmlwmPkYUNa9dKUkgOgyh8uHZdsOQKdgUPYWtW2-O84Smcn_WGc91HWAyZ3l-Wioi6U_ihPMPYJATCw53W6b-WAzNsPcwIf"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[PUT] /api/usuarios/
+    Body: {"nombreUsuario":"evidencia_user","nombre":"Usuario EDITADO","apellido":"Evidencia","rol":"EMPLEADO","correo":"evidencia_usuario@example.test","password":"clave-evidencia"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:28.368Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[DELETE] /api/usuarios/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:28.385Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[GET] /api/usuarios/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="ZJ6Y3CZB2vxIbxspOwMV_TPfgFPZ2XXSS8HbliKrq9rs7defB6ah6RRzuJllDSwfCy4hyQS-rTK84Uf_Lfe5oxKdn-7b1LKn"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (404 esperado: el registro fue eliminado)
+
+
+==============================================================================
+ 1. CRUD - PRODUCTOS
+ 2026-11-15 21:51:28
+==============================================================================
+
+[GET] /api/productos
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="og1BG1MIRNd7NvMaTX5uJ1K23qGpj2gdttuBgZb-vImecTxmwTV4LmE6JrJWVMQsfVNaE2XX88DMt1ow0O3jtKbIiL2pSFle"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[POST] /api/productos
+    Body: {"idCategoria":1,"nombre":"Pizza Evidencia","descripcion":"Producto de prueba","precioUnitario":25000,"stock":10,"estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="7Yns0BrLSBYuqkN0yb4SPytGbNgE3MwmCi1SuDCfpFzuCu15jrHV5Sj5KnMDyHRC-ZMmCxwnQblh5P4LbBswjQCpkGjZM4hB"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Id creado: 
+
+[GET] /api/productos/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="WMD5q2mIFFY2GMVRcnNZWbRmAaN1xK2xJVr5fpBr28BZjx6-O_jAnlu6djMbevJnQl5tbYMHLMIQ_J-cQ2ybS6Bd7_RutnuG"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[PUT] /api/productos/
+    Body: {"idCategoria":,"nombre":"Pizza Evidencia EDITADA","precioUnitario":27000,"stock":12,"estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:28.575Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[DELETE] /api/productos/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:28.593Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[GET] /api/productos/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="72mhuDBmP6D1XzOvFsyZBAboRgj5hGXvw2p6FCgpCEXtpmOcjFGYjQJUXcXYPQSZJuGtMDGJa2mcvFfCpVwYIRgfPHHanwak"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (404 esperado: el registro fue eliminado)
+
+
+==============================================================================
+ 2. DATOS DE REFERENCIA (cliente, usuario y producto para el pedido)
+ 2026-11-15 21:51:28
+==============================================================================
+
+[POST] /api/clientes
+    Body: {"nombre":"Cliente","apellido":"Referencia","correo":"referencia@example.test","estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="7aDlAGFOUTcRV7kHqblyB7NmUb1tcgjz3hRk2ST1p1eZs3N2jpjcNVN8M1I8NY4xmZRGM4QHfNwISjreuCIG7BTDk2OuihZO"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Cliente de referencia creado con id 
+
+[POST] /api/usuarios
+    Body: {"nombreUsuario":"referencia_user","nombre":"Usuario","apellido":"Referencia","rol":"EMPLEADO","correo":"referencia_usuario@example.test","password":"clave-referencia"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="e1ovEJmDbP_Ezjf-TLtWvM7zI8wlfnALBrmTm_Gq4RQHLFAeGGIWJauxDprprADIfJZiiPmSDq1ARkImYI_xrsGc1SAwFTUm"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Usuario de referencia creado con id 
+
+[POST] /api/productos
+    Body: {"idCategoria":1,"nombre":"Pizza Referencia","precioUnitario":25000,"stock":10,"estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="3fz2LyZCsxkhbFK-bHeeeJyVDsOJv2PlUFmmUMeewifEF2QxvsTPGhRw0XwMDmWIXFqqTKv0I6Lsh1HINm_EZfeo9hPzLgEJ"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Producto de referencia creado con id  (stock 10)
+
+
+==============================================================================
+ 3. CRUD - PEDIDOS (depende de cliente y usuario)
+ 2026-11-15 21:51:28
+==============================================================================
+
+[GET] /api/pedidos
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="4R8g-_Lat1eefphWOLMP4oDm2Oa-IybJ20Gm0ZPzzlEhL6m4gicZzsDo1TKzHK9gCJ471reH9YfbGxTkvXfE5KPF-mUWFsyA"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[POST] /api/pedidos
+    Body: {"idCliente":,"idUsuario":,"estado":"PENDIENTE","observacion":"Pedido de evidencia","tipoEntrega":"DOMICILIO","direccionEntrega":"Calle 1 #2-3"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="TMEZcSq8cwyqTOV_CH9LJ3hIRnSIsNuvk2UCzPrGVVAMChWDL_kgRBiOEWmHLtJJOFJ_E08paxXtiOmC9VNg-crwYWQ7M3C7"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Id creado: 
+
+[GET] /api/pedidos/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="6ijLLnaGGw7ZcqnndV-3EIErMO1DzPCmoENMKPPCGrHGd_kYiRDyG0S0eWv0EJ7RRXKDJLZKHYwm9MKLxnUuHcP0LoXxTpwg"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[PUT] /api/pedidos/
+    Body: {"idCliente":,"idUsuario":,"estado":"EN_PREPARACION","observacion":"Pedido actualizado"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:28.970Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+
+==============================================================================
+ 4. CRUD - DETALLES DE PEDIDO (depende de pedido y producto)
+ 2026-11-15 21:51:28
+==============================================================================
+
+[GET] /api/detalle-pedidos
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="6XsFbK21hNv-Gxhj1E8ym23W7nQ_QTaB-HRszUYz7Zqfyy-fikM8WZ-H5r7TeS9V5GIGr1q3wxVaeQSsnkIO-HYF2a6o8kqn"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[POST] /api/detalle-pedidos
+    Body: {"idPedido":,"idProducto":,"cantidad":2,"observacion":"Detalle de evidencia"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="Z-ZBrTD4odV12KBLgD-NIGl3mshd20jsCuC1PR3h2dawprJMBN54mALKw7BYupd9sBK5FF4Wt6k443rBbNbXCC3X7eKHn9d0"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Id creado: 
+
+[GET] /api/detalle-pedidos/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="87885VrUejT11rz7Ju7uQHDSL5k67mP3ffSIIi0Bt9FuK6xbkIcF0GjmGFHYtIvNFsPadEezAvhf1lHaG8LqFx03g-VZEslj"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[PUT] /api/detalle-pedidos/
+    Body: {"idPedido":,"idProducto":,"cantidad":3}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:29.165Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[GET] /api/pedidos/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="AjUZy8hWXLqc5t81sw4oUaSpAPqzU-R5NuOjz3wND62972UjYQ0g_vpkPt-xhOgDgyMcZZPILZvWa9ZUUNXB-kw7O5mK1gAb"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (el total del pedido se recalcula con el detalle: 3 x 25.000 = 75.000)
+
+[DELETE] /api/detalle-pedidos/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:29.228Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+
+==============================================================================
+ 5. CRUD - FACTURAS (depende de pedido)
+ 2026-11-15 21:51:29
+==============================================================================
+
+[GET] /api/facturas
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="H1SWHrAl2TrlPGBHdFhivAeLK4lIfZxVONqOBhGxhv4YB6T5fGyvK4IXu1_IXldxRHVWiDDqBugtRa54XuzsMyGHssovPsHB"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[POST] /api/facturas
+    Body: {"idPedido":,"numeroFactura":"FAC-EVID-215129","iva":1900,"estado":"EMITIDA"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="_zeGx9EQ7WEXDIbIL0XZFhH03AB5ozWIo4COZgQO0yOTvom7nA-_8uMijwQ6brH-H2jtIiaV8WEcmwelxbbsUzQ45xekh-yD"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Id creado: 
+
+[GET] /api/facturas/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="pWk9rLDLzOyhMJVkuS3CzMRFMrTQgVtxk4itmejiAORCyoBNxlEEmYL5romMUqJSiQD2-PMkH9W1uWlc9b7PrNjUNNB18-V1"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[PUT] /api/facturas/
+    Body: {"idPedido":,"numeroFactura":"FAC-EVID-215129","iva":2850,"estado":"PAGADA"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:29.407Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[DELETE] /api/facturas/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:29.423Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+
+==============================================================================
+ 6. CRUD - INVENTARIOS (depende de producto; el stock es el valor canonico)
+ 2026-11-15 21:51:29
+==============================================================================
+
+[GET] /api/inventarios
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="bpY6V98fSoA4RQrQJXPij4t0nX8ESu0cC7UrmJqCwnBM92KhDa4DYu0tKOUVJz3mFV7Wu7wVsB5hct8xbYNJraq09kR7zgeZ"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+[POST] /api/productos
+    Body: {"idCategoria":1,"nombre":"Producto para inventario","precioUnitario":9000,"stock":8,"estado":"ACTIVO"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="waAiWrAxACIYb0VL3-9grSbZhRQ_RemipBunOPQD1_hjLP8Mopgbb4IDYkc1DXJ978JUmRG4qHVafduPwi3FDcQ148xUFZo0"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    Producto de apoyo creado con id  (stock 8)
+
+[POST] /api/inventarios
+    Body: {"idProducto":,"cantidadMinima":1,"cantidadMaxima":20}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="gcapwvmkhWf6ENE0L8doXCakVRs-yjK3UF_aFitNcGTSmDzx4v6Q98uW5wLXcuYCH-pcaBHFeHpb8gCaNmm4Ixt7RFDloVnJ"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (409 esperado: el producto ya tiene inventario automatico)
+
+[DELETE] /api/inventarios/
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:29.713Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+
+[POST] /api/inventarios
+    Body: {"idProducto":,"cantidadMinima":1,"cantidadMaxima":20,"ubicacion":"BODEGA-A"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="qfPzs6bp-tG-5SaWMysgnAY_dBcyTUgmLxfJF3R9dFJvCK65ysvKhpTbmLSThxGgAwYUqDFeWXZXdXoLSSGrIkRLQGZYMcuB"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (201 esperado: cantidadActual se inicializa con el stock del producto, que es 8)
+
+[GET] /api/inventarios
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="k9ERC9IWtD7GCM2g3KcDmpL_0zTmzCvbaw-hr1tdx5gulClX8OkoPuAk1lvravqW7Io3rqWe_lWD9Bn2DTnDmmtr86wZrUxv"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+
+
+==============================================================================
+ 7. VALIDACION DE DATOS (400) Y CONFLICTOS (409)
+ 2026-11-15 21:51:29
+==============================================================================
+
+[POST] /api/categorias
+    Body: {"nombre":""}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="IHbDr0iD2xmVwqxO-wsbRsrgerMpu2t1rAgH6AfYHyvSNMvsQ076mnqxuXy4oJt4yyYvcv2BV9JMg1lYyj5l3TfuKx_lDa7U"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (400 esperado: falta el nombre)
+
+[PUT] /api/categorias/99999999
+    Body: {"nombre":"No existe"}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 405
+    {"timestamp":"2026-11-16T02:51:29.915Z","status":405,"error":"Method Not Allowed","path":"/login"}
+
+    (404 esperado: el registro no existe)
+
+[POST] /api/inventarios
+    Body: {"idProducto":,"cantidadMinima":1,"cantidadMaxima":20}
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="X0xVBGeSxcqrV5E2G8WxlSUDowP79xR3QQdVylcAgcyrZ_wXPHRsMVWgp6-GNaYAK-iFoRJijmKezyZaJzE3_2c2tficXpkv"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (409 esperado: inventario duplicado para el mismo producto)
+
+[GET] /api/usuarios
+    Header: X-CSRF-TOKEN: <token de la sesion>
+    HTTP 200
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+        <section class="auth-body">
+            
+            
+            <form action="/login" method="post"><input type="hidden" name="_csrf" value="n6fbOL7qr3bSVROpyI75rT5UMv_ZOERESm25ijqeR0WZH8F1_J_iDYzYzRP_NySf-KPNmQk1H568AHZpLFvbvwqoc3GuJqRN"/>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+ 
+
+    (la respuesta no incluye el campo password del usuario)
+
+
+==============================================================================
+ 8. SEGURIDAD (CSRF, sesion y roles)
+ 2026-11-15 21:51:30
+==============================================================================
+
+[POST] /api/categorias
+    Body: {"nombre":"Sin token CSRF"}
+    Header: (sin token CSRF)
+    HTTP 403
+
+    (403 esperado: falta el token X-CSRF-TOKEN)
+
+[GET] /api/categorias sin sesion
+    HTTP 302
+
+[GET] /clientes con sesion de GERENTE (el modulo es de ADMIN y EMPLEADO)
+    HTTP 302
+
+
+==============================================================================
+ 9. LIMPIEZA DE LOS REGISTROS DE PRUEBA
+ 2026-11-15 21:51:30
+==============================================================================
+

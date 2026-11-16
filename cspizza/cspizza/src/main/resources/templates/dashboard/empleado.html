@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Empleado | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="container">
+        <header class="topbar">
+            <h2>Panel operativo</h2>
+            <div class="user-actions">
+                <span class="user-pill" th:text="'Usuario: ' + ${username}">Usuario</span>
+                <a class="logout-link" th:href="@{/logout}">Cerrar sesión</a>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h3>Bienvenido, empleado</h3>
+            <p>Gestiona ventas rápidas, pedidos activos y atención al cliente.</p>
+        </section>
+
+        <section class="grid">
+            <article class="card">
+                <div class="icon">O</div>
+                <h3>Pedidos</h3>
+                <p>Registra y actualiza pedidos del día.</p>
+                <a th:href="@{/pedidos}">Ver pedidos</a>
+            </article>
+
+            <article class="card">
+                <div class="icon">P</div>
+                <h3>Productos</h3>
+                <p>Consulta disponibilidad de menú.</p>
+                <a th:href="@{/productos}">Ver productos</a>
+            </article>
+
+            <article class="card">
+                <div class="icon">C</div>
+                <h3>Clientes</h3>
+                <p>Registra nuevas ventas y datos de clientes.</p>
+                <a th:href="@{/clientes}">Ver clientes</a>
+            </article>
+        </section>
+    </div>
+</body>
+</html>
