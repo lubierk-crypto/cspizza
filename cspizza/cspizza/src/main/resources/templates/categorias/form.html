@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Categoría | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="container">
+        <header class="topbar">
+            <h2>Categoría</h2>
+            <div class="user-actions">
+                <a class="logout-link" th:href="@{/categorias}">Cancelar</a>
+            </div>
+        </header>
+
+        <section class="card" style="margin-top:24px; max-width:720px;">
+            <form th:action="@{/categorias/guardar}" th:object="${categoria}" method="post">
+                <input type="hidden" th:field="*{idCategoria}" />
+
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" class="form-control" type="text" th:field="*{nombre}" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" class="form-control" th:field="*{descripcion}" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <input id="estado" class="form-control" type="text" th:field="*{estado}" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

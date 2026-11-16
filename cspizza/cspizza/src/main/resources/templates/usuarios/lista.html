@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usuarios | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="dashboard">
+    <div class="container">
+        <header class="topbar">
+            <h2>Usuarios</h2>
+            <div class="user-actions">
+                <a class="logout-link" th:href="@{/dashboard}">Inicio</a>
+                <a class="logout-link" th:href="@{/logout}">Cerrar sesión</a>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h3>Usuarios del sistema</h3>
+            <p>Administra cuentas, roles y estados de acceso.</p>
+            <a class="btn btn-primary" th:href="@{/usuarios/nuevo}" style="width:auto; display:inline-flex;">Nuevo usuario</a>
+        </section>
+
+        <section class="card" style="margin-top:24px;">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Usuario</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Nombre</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Rol</th>
+                        <th style="text-align:left; padding:12px; border-bottom:1px solid #ddd;">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${usuario.nombreUsuario}">Usuario</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${usuario.nombre}">Nombre</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${usuario.rol}">Rol</td>
+                        <td style="padding:12px; border-bottom:1px solid #eee;" th:text="${usuario.estado}">Estado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

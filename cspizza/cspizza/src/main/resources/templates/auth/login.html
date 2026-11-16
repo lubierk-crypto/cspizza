@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | cspizza</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="auth-page">
+    <main class="auth-card" aria-label="Formulario de inicio de sesión">
+        <header class="auth-header">
+            <div class="brand-badge">CP</div>
+            <h1>cspizza</h1>
+            <p>Control administrativo</p>
+        </header>
+
+        <section class="auth-body">
+            <div th:if="${param.error}" class="alert alert-error">
+                Usuario o contraseña incorrectos.
+            </div>
+
+            <div th:if="${param.logout}" class="alert alert-success">
+                Has cerrado sesión correctamente.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrap">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="Ej. admin" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" required />
+                        <button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar u ocultar contraseña">Mostrar</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </section>
+
+        <footer class="auth-footer">
+            <span>Usuarios de prueba:</span>
+            <strong>admin/admin123</strong> · <strong>gerente/gerente123</strong> · <strong>empleado/empleado123</strong>
+        </footer>
+    </main>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>
