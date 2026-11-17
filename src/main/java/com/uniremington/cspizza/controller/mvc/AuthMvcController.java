@@ -3,6 +3,7 @@ package com.uniremington.cspizza.controller.mvc;
 import com.uniremington.cspizza.service.PedidoService;
 import com.uniremington.cspizza.model.vo.PedidoVO;
 import com.uniremington.cspizza.model.vo.InventarioVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ public class AuthMvcController {
     private PedidoService pedidoService;
 
     /** Constructor usado por Spring (inyección por constructor). */
+    @Autowired
     public AuthMvcController(PedidoService pedidoService) {
         this.pedidoService = pedidoService;
     }
