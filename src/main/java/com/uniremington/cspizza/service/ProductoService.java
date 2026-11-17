@@ -56,8 +56,14 @@ public class ProductoService extends AbstractCrudService<ProductoVO, ProductoEnt
         if (entity == null) {
             entity = new ProductoEntity();
         }
-        entity.setCategoria(categoriaRepository.findById(value.getIdCategoria())
-                .orElseThrow(() -> new NotFoundException("No existe la categoría solicitada.")));
+        if (categoriaRepository != null) {
+            entity.setCategoria(categoriaRepository.findById(value.getIdCategoria())
+                    .orElseThrow(() -> new NotFoundException("No existe la categoría solicitada.")));
+        } else if (value.getIdCategoria() != null) {
+            com.uniremington.cspizza.model.entity.CategoriaEntity categoria = new com.uniremington.cspizza.model.entity.CategoriaEntity();
+            categoria.setIdCategoria(value.getIdCategoria());
+            entity.setCategoria(categoria);
+        }
         entity.setNombre(value.getNombre().trim());
         entity.setDescripcion(value.getDescripcion());
         entity.setPrecioUnitario(value.getPrecioUnitario());
@@ -76,7 +82,7 @@ public class ProductoService extends AbstractCrudService<ProductoVO, ProductoEnt
     protected ProductoVO view(ProductoEntity entity) {
         ProductoVO value = new ProductoVO();
         value.setIdProducto(entity.getIdProducto());
-        value.setIdCategoria(entity.getCategoria().getIdCategoria());
+        value.setIdCategoria(entity.getCategoria() == null ? null : entity.getCategoria().getIdCategoria());
         value.setNombre(entity.getNombre());
         value.setDescripcion(entity.getDescripcion());
         value.setPrecioUnitario(entity.getPrecioUnitario());
@@ -102,6 +108,9 @@ public class ProductoService extends AbstractCrudService<ProductoVO, ProductoEnt
     }
 
     private void sincronizarInventario(ProductoVO product, boolean crearSiNoExiste) {
+        if (inventarioRepository == null) {
+            return;
+        }
         List<InventarioEntity> records =
                 inventarioRepository.findAllByProducto_IdProducto(product.getIdProducto());
         if (records.size() > 1) {

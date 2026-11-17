@@ -33,4 +33,7 @@ build/
 .vscode/
 
 # Carpeta anidada (artefacto, ignorar)
-cspizza/
+/cspizza/
+
+# Documentos de entrega (no subir)
+*.docx

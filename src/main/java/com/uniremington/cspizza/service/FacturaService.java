@@ -48,9 +48,9 @@ public class FacturaService extends AbstractCrudService<FacturaVO, FacturaEntity
         if (entity.getFechaEmision() == null) {
             entity.setFechaEmision(value.getFechaEmision() == null ? LocalDateTime.now() : value.getFechaEmision());
         }
-        entity.setSubtotal(entity.getPedido().getTotalPedido()==null?BigDecimal.ZERO:entity.getPedido().getTotalPedido());
+        entity.setSubtotal(entity.getPedido().getTotalPedido()==null?new BigDecimal("0.00"):entity.getPedido().getTotalPedido());
         if(value.getIva()!=null && value.getIva().signum()<0) throw new IllegalArgumentException("El IVA no puede ser negativo.");
-        entity.setIva(value.getIva()==null?BigDecimal.ZERO:value.getIva());
+        entity.setIva(value.getIva()==null?new BigDecimal("0.00"):value.getIva());
         entity.setTotal(entity.getSubtotal().add(entity.getIva()));
         entity.setEstado(value.getEstado() == null || value.getEstado().isBlank() ? "EMITIDA" : value.getEstado());
         return entity;
@@ -112,7 +112,7 @@ public class FacturaService extends AbstractCrudService<FacturaVO, FacturaEntity
         }
         String numeroFactura = String.format("FAC-%06d", siguienteNumero);
 
-        BigDecimal subtotal = pedido.getTotalPedido() == null ? BigDecimal.ZERO : pedido.getTotalPedido();
+        BigDecimal subtotal = pedido.getTotalPedido() == null ? new BigDecimal("0.00") : pedido.getTotalPedido();
         BigDecimal iva = subtotal.multiply(ivaPorcentaje).divide(new BigDecimal("100"), 2, java.math.RoundingMode.HALF_UP);
         BigDecimal total = subtotal.add(iva);
 

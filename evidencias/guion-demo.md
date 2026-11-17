@@ -57,11 +57,11 @@ Ejecutar la coleccion en este orden, mostrando la respuesta de cada peticion:
 .\mvnw.cmd test
 ```
 
-- 45 pruebas en verde: servicios con H2, seguridad por rol y CSRF con MockMvc, y los flujos web
+- 108 pruebas en verde: servicios con H2, seguridad por rol y CSRF con MockMvc, y los flujos web
   que antes fallaban.
 
 ## 6. Cierre (30 segundos)
 
 - Mencionar las cifras: 8 entidades, 8 modulos CRUD, 44 peticiones en la coleccion de Postman,
-  45 pruebas automaticas, 8 tablas en MySQL.
+  108 pruebas automaticas, 8 tablas en MySQL.
 - Dejar claro que el login con roles protege las vistas y la API.

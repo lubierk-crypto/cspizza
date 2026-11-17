@@ -43,7 +43,7 @@ El script deja la base de datos como estaba (borra los registros que crea).
 
 ## Pruebas automaticas
 
-Ademas de la transcripcion, el proyecto incluye una suite automatica (45 pruebas) que cubre
+Ademas de la transcripcion, el proyecto incluye una suite automatica (108 pruebas) que cubre
 los mismos caminos:
 
 ```powershell
